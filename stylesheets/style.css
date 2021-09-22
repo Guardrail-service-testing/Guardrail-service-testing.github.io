@@ -531,6 +531,10 @@ body {
   display: none;
 }
 
+#start-here div.static-logo-grey-light {
+  display: none;
+}
+
 #start-here .h-full {
   height: auto;
 }
