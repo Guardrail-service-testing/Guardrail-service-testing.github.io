@@ -1310,18 +1310,22 @@
             we found that some responses occurring during replay contained data
             that pertained to the wrong request.
           </p>
-          <p>Expected test results</p>
-          <img
-            class="lazy"
-            alt="Expected test results"
-            data-src="images/diagrams/no_mismatch.drawio.png"
-          />
-          <p>Actual test results</p>
-          <img
-            class="lazy"
-            alt="Actual test results"
-            data-src="images/diagrams/mismatch_problem.drawio.png"
-          />
+          <figure>
+            <figcaption>Expected test results</figcaption>
+            <img
+              class="lazy"
+              alt="Expected test results"
+              data-src="images/diagrams/no_mismatch.drawio.png"
+            />
+          </figure>
+          <figure>
+            <figcaption>Actual test results</figcaption>
+            <img
+              class="lazy"
+              alt="Actual test results"
+              data-src="images/diagrams/mismatch_problem.drawio.png"
+            />
+          </figure>
           <p>
             This traffic mismatch only occurs with identical requests that
             happened concurrently in production. If the recorded requests in
