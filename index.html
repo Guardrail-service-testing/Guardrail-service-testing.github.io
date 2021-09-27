@@ -456,16 +456,17 @@
           <h1>Case Study</h1>
           <h2 id="section-1">1. Introduction</h2>
           <p>
-            Guardrail is an open-source tool created to help reduce incidents in
-            production by using recorded HTTP traffic to generate regression
-            tests for stateless microservices. The tests run as out-of-process
-            component tests using traffic replay and service virtualization.
+            Guardrail is an open-source “traffic replay” tool created to help
+            reduce incidents in production by using recorded HTTP traffic to
+            generate regression tests for stateless microservices. The tests run
+            as out-of-process component tests using traffic replay and service
+            virtualization.
           </p>
           <p>
             This case study explains the engineering problem Guardrail
             addresses, how it works, and some of the key technical challenges we
-            encountered. Before we get into those details, we want to explain
-            the problem that we sought to address.
+            encountered while building it. Before we get into those details, we
+            want to explain the problem that we sought to address.
           </p>
           <h2 id="section-2">2. Testing Microservices</h2>
           <p>
@@ -495,11 +496,6 @@
             data-src="images/diagrams/store_update.drawio.png"
           />
           <p>
-            If the updated microservice handles production traffic as expected,
-            the update was a success, and the store continues to operate without
-            interruption.
-          </p>
-          <p>
             However, there is also the possibility that the updated code, once
             deployed, introduces unforeseen changes into the microservice as a
             whole, and the service starts to mishandle traffic in the production
@@ -512,10 +508,10 @@
           </p>
           <img class="lazy" data-src="images/diagrams/store_error.drawio.png" />
           <p>
-            From this scenario, we know that Aaron needs to confirm that the new
-            version of the microservice <em>as a whole</em> operates as
-            expected. He needs another assurance to verify the quality of the
-            deployed changes.
+            From this scenario, we know that Aaron needs to confirm that the
+            <em>new</em> version of the microservice
+            <em>as a whole</em> operates as expected. He needs to verify the
+            quality of the deployed changes.
           </p>
           <h3 id="section-2-1">
             2.1 Testing in Production vs. Outside of Production
@@ -545,7 +541,6 @@
             have a load balancer to split traffic meant for the “store service”
             between the two versions.
           </p>
-
           <img
             class="lazy"
             data-src="images/diagrams/store_canary.drawio.png"
@@ -584,7 +579,7 @@
             limiting the blast radius to the fewest customers possible?” (Glover
             and Probst) Though effective, this approach requires careful
             planning and tooling. There needs to be an initial investment in
-            observability to detect problems, and there need to be strategies
+            observability to detect problems, and there needs to be strategies
             for rapid rollback. Testing in production alone, even with these
             valuable tools, is not perfect.
           </p>
@@ -669,10 +664,9 @@
           <p>
             One common approach to this challenge is for the developer to
             manually script the requests based on their understanding of the
-            business logic and APIthe application’s internal network traffic and
-            microservice. In other words, the developer comes up with a set of
-            HTTP requests to issue against the service under test and the
-            response they expect for each request.
+            business logic and API. In other words, the developer comes up with
+            a set of HTTP requests to issue against the service under test and
+            the response they expect for each request.
           </p>
           <img
             class="lazy"
@@ -686,15 +680,15 @@
           </p>
           <img class="lazy" data-src="images/diagrams/run_tests.drawio.png" />
           <p>
-            This approach may beis adequate for applications that have simple
-            API, predictable internal network traffic. However, the traffic a
-            microservice is handling may be unpredictable. It is difficult for a
-            developer to manually script requests that represent traffic the
-            service will need to handle in production. It&#39;s not enough to
-            script a single request, and you may need to script a sequence of
-            requests to emulate a user&#39;s transaction. The developer needs to
-            anticipate actual usage patterns. Not only that, he then needs to
-            provide realistic test data.
+            This approach may be adequate for applications that have simple
+            APIs. However, the traffic a microservice is handling may be
+            unpredictable. It is difficult for a developer to manually script
+            requests that represent traffic the service will need to handle in
+            production. It&#39;s not enough to script a single request, and you
+            may need to script a sequence of requests to emulate a user&#39;s
+            transaction. The developer needs to anticipate actual usage
+            patterns. Not only that, he then needs to provide realistic test
+            data.
           </p>
           <p>
             On top of that, the tests become stale when the new API rolls out.
@@ -729,7 +723,7 @@
             class="lazy"
             data-src="images/diagrams/test_third_party.drawio.png"
             alt="Example of a downstream dependency that is external to an
-            application"
+          application"
           />
           <p>
             The approach to this challenge depends on whether the downstream
@@ -842,10 +836,10 @@
           <img class="lazy" data-src="images/diagrams/run_tests.drawio.png" />
           <p>
             Using traffic replay, the developer does not have to predict what
-            productioninternal network traffic looks like and how exactly the
-            service under test should respond to that traffic. This makes
-            traffic replay a good fit for creating regression tests when
-            production traffic is complex and unpredictable.
+            production traffic looks like and how exactly the service under test
+            should respond to that traffic. This makes traffic replay a good fit
+            for creating regression tests when production traffic is complex and
+            unpredictable.
           </p>
           <h4 id="section-2-3-2">
             2.3.2 Making Downstream Dependencies Available using Service
@@ -871,7 +865,6 @@
             production. When it finds that request, it issues the corresponding
             response that the “store service” received in production.
           </p>
-
           <img
             class="lazy"
             data-src="images/diagrams/generate_downstream_script.drawio.png"
@@ -995,7 +988,7 @@
             5.1.1 Verify Application Meets Requirements
           </h4>
           <p>
-            There are three requirements an architecture must meet before
+            There are a few requirements an architecture must meet before
             Guardrail can be deployed.
           </p>
           <p>
@@ -1021,8 +1014,7 @@
             and protocol. Guardrail can work with architectures with
             (synchronous) HTTP communication patterns using a combination of
             REST and JSON. It doesn&#39;t work with asynchronous communication
-            patterns that use HTTP Polling or message queues.the payload of HTTP
-            requests and responses must be JSON.
+            patterns that use HTTP Polling or message queues.
           </p>
           <h4 id="section-5-1-2">
             5.1.2 Installation in a Production Environment
@@ -1068,9 +1060,9 @@
           <h4 id="section-5-1-5">5.1.5 Stop Recording</h4>
           <p>
             The developer can then stop upstream and downstream traffic
-            recording by quitting Guardrail (<kbd>^C</kbd>). Finally, the URLs
-            addressing the downstream recording proxies should be reverted to
-            the URLs that point directly towards the downstream dependencies.
+            recording by quitting Guardrail (^C). Finally, the URLs addressing
+            the downstream recording proxies should be reverted to the URLs that
+            point directly towards the downstream dependencies.
           </p>
           <h3 id="section-5-2">5.2 Replay</h3>
           <h4 id="section-5-2-1">5.2.1 Setup the Testing Environment</h4>
@@ -1084,8 +1076,8 @@
             service 2.0”) on that machine. The microservice should be configured
             using the same URLs used by the microservice in production during
             recording. If it is configured with addresses of the actual
-            dependencies, the microservice under test will issue requests to
-            servers inaccessible to it.
+            dependencies, the service under test will issue requests to the real
+            production dependencies..
           </p>
           <h4 id="section-5-2-2">5.2.2 Data Transfer</h4>
           <p>
@@ -1117,8 +1109,7 @@
             Service calculates the results of a replay session and serves the
             results to the Guardrail user interface. Results are a comparison of
             the actual and expected HTTP response status, headers, and JSON
-            body. Headers that are not relevant to microservice behavior, such
-            as timestamps or tokens, can be ignored.
+            body.
           </p>
           <p>
             Once a replay session finishes, the developer can access the user
@@ -1174,10 +1165,6 @@
             them into an orchestration system or leaving it up to the user to
             manage. Without it, there are very few assumptions we can make about
             the underlying infrastructure.
-          </p>
-          <p>
-            However, automating the modification of DNS records is. We could
-            leave it up to the users of Guardrail to modify DNS records.
           </p>
           <p>Let’s consider the other approach.</p>
           <h4 id="section-6-1-2">6.1.2 UNIX PCAP</h4>
@@ -1239,15 +1226,13 @@
           </ul>
           <p>
             Changing the library used to issue HTTP requests would require code
-            modification for the microservice. If the library is only issued in
-            a few modules, making this code modification is a relatively simple
-            process. The open-source tool, Nock, can be used to accomplish this
-            in microservices written in JavaScript, and VCR can be used in
-            microservices written in Ruby. The main tradeoff of this approach is
-            that we&#39;d be restricted to testing microservices written in
-            languages that those tools can support, and we would require
-            additional changes to their code. We would rather use a solution
-            that occurs out-of-process.
+            modification for the microservice. The open-source tool, Nock, can
+            be used to accomplish this in microservices written in JavaScript,
+            and VCR can be used in microservices written in Ruby. The main
+            tradeoff of this approach is that we&#39;d be restricted to testing
+            microservices written in languages that those tools can support, and
+            we would require additional changes to their code. We would rather
+            use a solution that occurs out-of-process.
           </p>
           <p>
             We considered redirecting traffic through DNS, but this needs to be
@@ -1263,18 +1248,15 @@
             according to how an application is deployed. Some applications
             deployed on AWS are able to interact with their DNS using Route 55,
             some using Kubernetes can interact with a cluster’s DNS using
-            CoreDNS (<a
-              href="https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/"
-              >https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/</a
-            >), while some do not have an easy waythe ability to modify DNS
-            records at all. We opted forprefer a solution that is not limited to
-            a particular deployment strategy.
+            CoreDNS, while some do not have an easy way to modify DNS records at
+            all. We opted for a solution that is not limited to a particular
+            deployment strategy.
           </p>
           <p>
             Changes to the configuration file are easier to manage compared to
             the first two methods. Unlike the HTTP library, this will only be a
             configuration change and not a code change. But of course, there is
-            an addedadd a user step and we need to assume the convention of
+            an added user step and we need to assume the convention of
             extracting URLs for downstream dependencies into configuration files
             (Wiggins).
           </p>
@@ -1451,18 +1433,18 @@
           <p>
             We want to add a solution to transfer data across environments
             securely, encrypt it at rest, and provide access control for
-            developers and operators on recorded traffic.
+            developers and operators.
           </p>
           <h3 id="section-7-2">7.2 Diffing Outbound Requests</h3>
           <p>
             Currently, the regression simulations are only on the API consumer
-            sides. We want to add the ability to show unexpected downstream
+            side. We want to add the ability to show unexpected downstream
             requests associated with an upstream request.
           </p>
           <h3 id="section-7-3">7.3 Toggle Simulating Response Times</h3>
           <p>
-            We would like to addAn easy thing to add is the ability to toggle
-            the ability to simulate the downstream response times.
+            We would like to add the ability to toggle the ability to simulate
+            the downstream response times.
           </p>
           <p>
             There are tradeoffs between test execution time and seeing the
@@ -1507,16 +1489,15 @@
           <p>
             Guardrail is a tool designed to test stateless non-persisted
             microservices limited to data transformation tasks using synchronous
-            HTTPREST-based communication. With that use case, we can test using
-            only traffic replay and service virtualization.
+            HTTP communication. With that use case, we can test using only
+            traffic replay and service virtualization.
           </p>
           <p>
             We identified the main challenges of testing a microservice, and
             they center around creating test data and recreating the
             environment. Creating test data needs a good understanding of the
             API, and those tests need to be separately maintained. Furthermore,
-            the environment needs to be emulated with. and maintenance, and
-            recreating the environment requires service virtualization.
+            the environment needs to be emulated with service virtualization.
           </p>
           <p>
             We believe we&#39;ve built Guardrail into an open-source tool that
