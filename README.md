@@ -1,7 +1,9 @@
 # [Guardrail Service Testing](https://guardrail-service-testing.github.io/)
 
 <p align="center">
-  <img src="images/logo/guardrail-logo-name-color.png" />
+  <a href="https://guardrail-service-testing.github.io">
+    <img src="images/logo/guardrail-logo-name-color.png" />
+  </a>
 </p>
 
 <h2>Guardrail: Service Testing</h2>
