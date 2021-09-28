@@ -17,7 +17,7 @@
   --gr-teal: #7aaead;
   --gr-teal-light: #9ac1c1;
   --gr-orange: #ff895d;
-  --gr-gainsboro: #E5E5E5;
+  --gr-gainsboro: #e5e5e5;
 
   /* --guardrail-dark-slate-grey: #313a61;
   --guardrail-cadet-blue: #86c4ba;
@@ -587,7 +587,7 @@ body {
 #start-here .bg-teal h2 {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--white);
+  color: var(--gr-blue);
 }
 
 #start-here h2.sm-header {
